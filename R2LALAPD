@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPD Application</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #333;
+            color: #fff;
+            height: 100%;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #111;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .button {
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Full screen fix */
+        @media (min-width: 1024px) {
+            .container {
+                height: 100vh;
+                padding: 40px;
+            }
+
+            form {
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>LAPD Application</h1>
+        <form id="swatForm">
+            <div class="form-group">
+                <label for="robloxUsername">What is your Roblox username?</label>
+                <input type="text" id="robloxUsername" name="robloxUsername" required>
+            </div>
+
+            <div class="form-group">
+                <label for="discordUsername">What is your Discord username?</label>
+                <input type="text" id="discordUsername" name="discordUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="discordID">What is your Discord ID?</label>
+                <input type="text" id="discordID" name="discordID" required>
+            </div>
+            <div class="form-group">
+                <label for="experiences">Do you have past experiences?</label>
+                <input type="text" id="experie" name="experiences" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Why do you want to join LAPD?</label>
+                <textarea id="reason" name="reason" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Are you above the age of 13?</label>
+                <input type="radio" id="ageYes" name="age" value="Yes" required>
+                <label for="ageYes">Yes</label>
+                <input type="radio" id="ageNo" name="age" value="No" required>
+                <label for="ageNo">No</label>
+            </div>
+            <div class="form-group">
+                <label>Do you have a funtcion able Microphone?</label>
+                <input type="radio" id="Microphoneyes" name="Microphone" value="Yes" required>
+                <label for="Microphone">Yes</label>
+                <input type="radio" id="ageNo" name="Microphone" value="No" required>
+                <label for="Microphone">No</label>
+            </div>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('swatForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            const webhookURL = "https://discord.com/api/webhooks/1284860730767577139/IZz5g3bhP7qpaKYqavDEikitwKJjeTa0bGVbaJY4tEOHC4VGaedQD3NhkuozbxnUb5p7";
+
+            const data = {
+                content: `**SWAT Application Submitted**\nRoblox Username: ${formData.get('robloxUsername')}\nDiscord Username: ${formData.get('discordUsername')}\nReason: ${formData.get('reason')}\nAbove 13: ${formData.get('age')}`
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(() => {
+                alert("Application submitted successfully!");
+                this.reset();
+            }).catch((err) => {
+                alert("There was an error submitting the application.");
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+
+</html>
+
